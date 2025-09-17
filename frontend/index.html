@@ -7,6 +7,14 @@
 </head>
 <body>
     <h1>Eventos Acadêmicos</h1>
+    <form id="formEvento">
+        <input id="titulo" placeholder="Título" required>
+        <input id="descricao" placeholder="Descrição" required>
+        <input id="dataHora" type="datetime-local" required>
+        <input id="palestrante" placeholder="Palestrante" required>
+        <input id="vagas" type="number" placeholder="Vagas" required min="1">
+        <button type="submit">Criar Evento</button>
+    </form>
     <div id="eventos"></div>
 
     <script src="script.js"></script>
