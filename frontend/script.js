@@ -1,48 +1,62 @@
-async function carregarEventos() {
-    const response = await fetch('http://localhost:8099/api/evento');
-    const eventos = await response.json();
-    const container = document.getElementById('eventos');
-    container.innerHTML = '';
-    eventos.forEach(e => {
-        const div = document.createElement('div');
-        div.className = 'evento';
-        const data = new Date(e.dataHora);
-        div.innerHTML = `
-            <h3>${e.titulo}</h3>
-            <p><strong>Descrição:</strong> ${e.descricao}</p>
-            <p><strong>Data/Hora:</strong> ${data.toLocaleString('pt-BR')}</p>
-            <p><strong>Palestrante:</strong> ${e.palestrante}</p>
-            <p><strong>Vagas:</strong> ${e.vagas}</p>
+const form = document.getElementById('formEvento');
+const eventosDiv = document.getElementById('eventos');
+
+// Função para renderizar eventos
+function renderEventos(eventos) {
+    eventosDiv.innerHTML = '';
+    if (!eventos.length) {
+        eventosDiv.innerHTML = '<p>Nenhum evento cadastrado.</p>';
+        return;
+    }
+    eventos.forEach(ev => {
+        const card = document.createElement('div');
+        card.className = 'evento-card';
+        card.innerHTML = `
+            <h2>${ev.titulo}</h2>
+            <p><strong>Descrição:</strong> ${ev.descricao}</p>
+            <p><strong>Data e Hora:</strong> ${new Date(ev.dataHora).toLocaleString('pt-BR')}</p>
+            <p><strong>Palestrante:</strong> ${ev.palestrante}</p>
+            <p><strong>Vagas:</strong> ${ev.vagas}</p>
         `;
-        container.appendChild(div);
+        eventosDiv.appendChild(card);
     });
 }
 
-async function criarEvento(e) {
+// Buscar eventos da API
+async function buscarEventos() {
+    try {
+        const resp = await fetch('http://localhost:8099/api/evento');
+        if (!resp.ok) throw new Error('Erro ao buscar eventos');
+        const eventos = await resp.json();
+        renderEventos(eventos);
+    } catch (e) {
+        eventosDiv.innerHTML = '<p style="color:red;">Erro ao carregar eventos.</p>';
+    }
+}
+
+// Enviar novo evento para a API
+form.addEventListener('submit', async (e) => {
     e.preventDefault();
-    const titulo = document.getElementById('titulo').value;
-    const descricao = document.getElementById('descricao').value;
-    const dataHora = document.getElementById('dataHora').value;
-    const palestrante = document.getElementById('palestrante').value;
-    const vagas = document.getElementById('vagas').value;
-
-    await fetch('http://localhost:8099/api/evento', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            titulo,
-            descricao,
-            dataHora,
-            palestrante,
-            vagas: parseInt(vagas)
-        })
-    });
-
-    document.getElementById('formEvento').reset();
-    carregarEventos();
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    carregarEventos();
-    document.getElementById('formEvento').addEventListener('submit', criarEvento);
+    const evento = {
+        titulo: form.titulo.value.trim(),
+        descricao: form.descricao.value.trim(),
+        dataHora: form.dataHora.value,
+        palestrante: form.palestrante.value.trim(),
+        vagas: Number(form.vagas.value)
+    };
+    try {
+        const resp = await fetch('http://localhost:8099/api/evento', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(evento)
+        });
+        if (!resp.ok) throw new Error('Erro ao criar evento');
+        form.reset();
+        buscarEventos();
+    } catch (e) {
+        alert('Erro ao criar evento. Verifique os dados e tente novamente.');
+    }
 });
+
+// Inicializar
+buscarEventos();
