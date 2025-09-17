@@ -1,15 +1,10 @@
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System.Collections.Generic;
-
 public class Usuario
 {
-    [BsonId]
-    [BsonRepresentation(BsonType.ObjectId)]
-    public string Id { get; set; }
-
+    public int Id { get; set; } = 0;
     public string Nome { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string Senha { get; set; } = null!;
-    public string Tipo { get; set; } = null!; // "estudante" ou "admin"
+    public string Tipo { get; set; } = null!;
+
+    public List<Inscricao> Inscricoes { get; set; } = new List<Inscricao>();
 }

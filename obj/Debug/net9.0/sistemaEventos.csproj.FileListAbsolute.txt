@@ -172,3 +172,9 @@ C:\Users\thomas.vianna\Documents\sistema-eventos\sistemaEventos\bin\Debug\net9.0
 C:\Users\thomas.vianna\Documents\sistema-eventos\sistemaEventos\bin\Debug\net9.0\sistemaEventos.runtimeconfig.json
 C:\Users\thomas.vianna\Documents\sistema-eventos\sistemaEventos\obj\Debug\net9.0\sistemaEventos.genruntimeconfig.cache
 C:\Users\thomas.vianna\Documents\sistema-eventos\sistemaEventos\obj\Debug\net9.0\ref\sistemaEventos.dll
+C:\Users\thomas.vianna\Documents\sistema-eventos\sistemaEventos\bin\Debug\net9.0\DnsClient.dll
+C:\Users\thomas.vianna\Documents\sistema-eventos\sistemaEventos\bin\Debug\net9.0\MongoDB.Bson.dll
+C:\Users\thomas.vianna\Documents\sistema-eventos\sistemaEventos\bin\Debug\net9.0\MongoDB.Driver.dll
+C:\Users\thomas.vianna\Documents\sistema-eventos\sistemaEventos\bin\Debug\net9.0\SharpCompress.dll
+C:\Users\thomas.vianna\Documents\sistema-eventos\sistemaEventos\bin\Debug\net9.0\Snappier.dll
+C:\Users\thomas.vianna\Documents\sistema-eventos\sistemaEventos\bin\Debug\net9.0\ZstdSharp.dll
