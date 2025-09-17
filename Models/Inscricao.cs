@@ -1,11 +1,14 @@
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
+
 public class Inscricao
 {
-    public int Id { get; set; }
-    public int UsuarioId { get; set; }
-    public Usuario Usuario { get; set; }
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string Id { get; set; }
 
-    public int EventoId { get; set; }
-    public Evento Evento { get; set; }
-
+    public string UsuarioId { get; set; } = null!;
+    public string EventoId { get; set; } = null!;
     public DateTime InscritoEm { get; set; } = DateTime.Now;
 }

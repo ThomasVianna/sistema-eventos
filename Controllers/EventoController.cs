@@ -1,28 +1,30 @@
+using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 [ApiController]
 [Route("api/[controller]")]
 public class EventoController : ControllerBase
 {
-    private readonly SistemaEventosContext _context;
+    private readonly MongoService _mongo;
 
-    public EventoController(SistemaEventosContext context)
+    public EventoController(MongoService mongo)
     {
-        _context = context;
+        _mongo = mongo;
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetEventos()
+    public async Task<ActionResult<List<Evento>>> Get()
     {
-        var eventos = await _context.Eventos.ToListAsync();
+        var eventos = await _mongo.Eventos.Find(_ => true).ToListAsync();
         return Ok(eventos);
     }
 
     [HttpPost]
-    public async Task<IActionResult> CriarEvento(Evento evento)
+    public async Task<ActionResult<Evento>> Create(Evento evento)
     {
-        _context.Eventos.Add(evento);
-        await _context.SaveChangesAsync();
+        await _mongo.Eventos.InsertOneAsync(evento);
         return Ok(evento);
     }
-
-    // Aqui você pode adicionar Put (Atualizar), Delete (Remover) etc.
 }
