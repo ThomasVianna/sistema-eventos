@@ -7,7 +7,7 @@ public class MongoService
 
     public MongoService(IConfiguration config)
     {
-        var connectionString = config.GetSection("MongoSettings:ConnectionString").Value 
+        var connectionString = config.GetSection("MongoSettings:ConnectionString").Value
                               ?? config.GetSection("MongoSettings")["ConnectionString"];
         var databaseName = config.GetSection("MongoSettings:DatabaseName").Value
                            ?? config.GetSection("MongoSettings")["DatabaseName"];

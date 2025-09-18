@@ -1,14 +1,17 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Sistema de Eventos</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="img/event.png.png">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <main>
-        <h1>Eventos Acadêmicos</h1>
+        <h1>Eventos</h1>
         <form id="formEvento" autocomplete="off">
             <label for="titulo">Título</label>
             <input id="titulo" name="titulo" placeholder="Título" required>
@@ -19,8 +22,8 @@
             <label for="dataHora">Data e Hora</label>
             <input id="dataHora" name="dataHora" type="datetime-local" required>
 
-            <label for="palestrante">Palestrante</label>
-            <input id="palestrante" name="palestrante" placeholder="Palestrante" required>
+            <!--   <label for="palestrante">Palestrante</label>
+            <input id="palestrante" name="palestrante" placeholder="Palestrante" required> -->
 
             <label for="vagas">Vagas</label>
             <input id="vagas" name="vagas" type="number" placeholder="Vagas" required min="1">
@@ -31,4 +34,5 @@
     </main>
     <script src="script.js"></script>
 </body>
+
 </html>
