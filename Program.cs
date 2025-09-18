@@ -14,7 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<SistemaEventosContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Habilitar CORS para permitir acesso do frontend
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -31,7 +31,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-// Use CORS antes dos controllers
+
 app.UseCors();
 
 app.UseHttpsRedirection();
