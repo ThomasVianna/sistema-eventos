@@ -10,6 +10,8 @@ function renderEventos(eventos) {
         eventosDiv.innerHTML = '<p class="text-center">Nenhum evento cadastrado.</p>';
         return;
     }
+    // Ordena por data/hora
+    eventos.sort((a, b) => new Date(a.dataHora) - new Date(b.dataHora));
     eventos.forEach(ev => {
         const card = document.createElement('div');
         card.className = 'evento-card';
@@ -19,7 +21,7 @@ function renderEventos(eventos) {
             <p><strong>Data e Hora:</strong> ${new Date(ev.dataHora).toLocaleString('pt-BR', { dateStyle: 'medium', timeStyle: 'short' })}</p>
             <p><strong>Palestrante:</strong> ${ev.palestrante}</p>
             <p><strong>Vagas:</strong> ${ev.vagas}</p>
-            <button class="delete-btn" aria-label="Deletar evento ${ev.titulo}" onclick="deletarEvento(${ev.id})">Deletar</button>
+            <button class="delete-btn" aria-label="Deletar evento ${ev.titulo}" onclick="deletarEvento('${ev._id}')">Deletar</button>
         `;
         eventosDiv.appendChild(card);
     });
@@ -69,6 +71,24 @@ form.addEventListener('submit', async (e) => {
         resetSubmitButton();
         return;
     }
+    if (evento.descricao.length < 10) {
+        document.getElementById('descricao-error').textContent = 'A descrição deve ter pelo menos 10 caracteres.';
+        document.getElementById('descricao-error').classList.remove('sr-only');
+        resetSubmitButton();
+        return;
+    }
+    if (evento.palestrante.length < 3) {
+        document.getElementById('palestrante-error').textContent = 'O nome do palestrante deve ter pelo menos 3 caracteres.';
+        document.getElementById('palestrante-error').classList.remove('sr-only');
+        resetSubmitButton();
+        return;
+    }
+    if (isNaN(evento.vagas) || evento.vagas < 1) {
+        document.getElementById('vagas-error').textContent = 'Informe um número de vagas válido (mínimo 1).';
+        document.getElementById('vagas-error').classList.remove('sr-only');
+        resetSubmitButton();
+        return;
+    }
 
     try {
         const resp = await fetch('http://localhost:8099/eventos', {
@@ -80,6 +100,13 @@ form.addEventListener('submit', async (e) => {
         form.reset();
         clearErrors();
         buscarEventos();
+
+        // Após form.reset() e clearErrors()
+        const successMsg = document.createElement('div');
+        successMsg.textContent = 'Evento criado com sucesso!';
+        successMsg.className = 'success-message';
+        form.parentNode.insertBefore(successMsg, form.nextSibling);
+        setTimeout(() => successMsg.remove(), 2500);
     } catch (e) {
         alert(`Erro: ${e.message}`);
     } finally {
@@ -89,11 +116,11 @@ form.addEventListener('submit', async (e) => {
 
 // Função para deletar evento
 async function deletarEvento(id) {
+    const btn = document.querySelector(`button[onclick="deletarEvento(${id})"]`);
     if (!confirm('Tem certeza que deseja deletar este evento?')) return;
+    btn.disabled = true; // botão de deletar
     try {
-        const resp = await fetch(`http://localhost:8099/eventos/${id}`, {
-            method: 'DELETE'
-        });
+        const resp = await fetch(`http://localhost:8099/eventos/${id}`, { method: 'DELETE' });
         if (!resp.ok) throw new Error(`Erro ${resp.status}: Não foi possível deletar o evento`);
         buscarEventos();
     } catch (e) {
