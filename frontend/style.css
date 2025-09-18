@@ -7,6 +7,7 @@
     --accent-color: #2e86c1;
     --text-dark: #1a1818;
     --text-light: #f5f5f5;
+    --error-color: #ff4d4d;
     --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
     --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
     --transition: all 0.3s ease-out;
@@ -25,89 +26,124 @@ body {
     font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
     background: var(--primary-gradient);
     margin: 0;
-    padding: 0;
+    padding: calc(var(--spacing-unit) * 1);
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--text-dark);
     font-size: 16px;
-    line-height: 1.5;
+    line-height: 1.6;
 }
 
 main {
-    width: min(90%, 720px);
+    width: min(90%, 800px);
     background: var(--card-bg);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
-    padding: calc(var(--spacing-unit) * 2.5) calc(var(--spacing-unit) * 2);
+    padding: calc(var(--spacing-unit) * 3);
     color: var(--text-light);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(12px);
     animation: fadeIn 0.8s ease-out;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+main:hover {
+    transform: translateY(-2px);
 }
 
 h1 {
     text-align: center;
     color: #a8c7fa;
-    margin-bottom: calc(var(--spacing-unit) * 2);
-    font-size: clamp(1.8rem, 4.5vw, 2.25rem);
+    margin-bottom: calc(var(--spacing-unit) * 2.5);
+    font-size: clamp(2rem, 5vw, 2.75rem);
     letter-spacing: 0.5px;
-    position: relative;
     font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 h1::after {
     content: "";
-    width: 80px;
-    height: 4px;
+    width: 100px;
+    height: 5px;
     background: var(--accent-color);
     display: block;
-    margin: 0.5rem auto 0;
-    border-radius: 4px;
-    animation: grow 0.8s ease-out;
+    margin: 0.75rem auto 0;
+    border-radius: 5px;
+    animation: grow 1s ease-out;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-unit);
-    margin-bottom: calc(var(--spacing-unit) * 2);
+    gap: calc(var(--spacing-unit) * 1.25);
+    margin-bottom: calc(var(--spacing-unit) * 2.5);
+}
+
+fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
 }
 
 label {
     font-weight: 600;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
     color: var(--text-light);
-    font-size: 0.95rem;
+    font-size: 1rem;
+    display: block;
 }
 
 input,
-button {
-    padding: calc(var(--spacing-unit) * 0.75);
-    border-radius: 8px;
+textarea {
+    padding: calc(var(--spacing-unit) * 0.875);
+    border-radius: 10px;
     font-size: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: var(--transition);
-}
-
-input {
+    border: 1px solid rgba(255, 255, 255, 0.3);
     background: var(--input-bg);
     color: var(--text-dark);
+    transition: var(--transition);
+    resize: vertical;
+    min-height: 2.5rem;
 }
 
-input:focus {
+textarea {
+    min-height: 100px;
+    max-height: 300px;
+}
+
+input:focus,
+textarea:focus {
     outline: none;
     border-color: var(--accent-color);
-    box-shadow: 0 0 8px rgba(46, 134, 193, 0.5);
+    box-shadow: 0 0 10px rgba(46, 134, 193, 0.6);
+    background: lighten(var(--input-bg), 5%);
 }
 
-input::placeholder {
-    color: rgba(0, 0, 0, 0.5);
+input::placeholder,
+textarea::placeholder {
+    color: rgba(0, 0, 0, 0.6);
     opacity: 1;
+    font-style: italic;
+}
+
+input[aria-invalid="true"],
+textarea[aria-invalid="true"] {
+    border-color: var(--error-color);
+    box-shadow: 0 0 8px rgba(255, 77, 77, 0.5);
+}
+
+.error-message {
+    color: var(--error-color);
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
 }
 
 button {
+    padding: calc(var(--spacing-unit) * 0.875);
+    border-radius: 10px;
+    font-size: 1rem;
     background: linear-gradient(135deg, #2e86c1, #1b6399);
     color: var(--text-light);
     border: none;
@@ -115,6 +151,24 @@ button {
     font-weight: 600;
     position: relative;
     overflow: hidden;
+    transition: var(--transition);
+}
+
+button[aria-busy="true"] .button-text {
+    opacity: 0;
+}
+
+button[aria-busy="true"] .loading-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid var(--text-light);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
 }
 
 button::after {
@@ -124,47 +178,60 @@ button::after {
     left: 50%;
     width: 0;
     height: 0;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.25);
     border-radius: 50%;
     transform: translate(-50%, -50%);
     transition: width 0.4s ease, height 0.4s ease;
 }
 
 button:hover::after {
-    width: 300px;
-    height: 300px;
+    width: 400px;
+    height: 400px;
 }
 
 button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 16px rgba(46, 134, 193, 0.5);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(46, 134, 193, 0.6);
     background: linear-gradient(135deg, #3498db, #217dbb);
 }
 
 button:active {
-    transform: scale(0.98);
+    transform: scale(0.97);
 }
 
 button:focus-visible {
-    outline: 2px solid var(--accent-color);
-    outline-offset: 2px;
+    outline: 3px solid var(--accent-color);
+    outline-offset: 3px;
 }
 
-/* Lista de eventos */
+.delete-btn {
+    background: linear-gradient(135deg, #e53e3e, #c53030);
+    margin-top: calc(var(--spacing-unit) * 0.75);
+    width: 100%;
+}
+
+.delete-btn:hover {
+    background: linear-gradient(135deg, #f56565, #d43d3d);
+    box-shadow: 0 8px 20px rgba(229, 62, 62, 0.6);
+}
+
+.delete-btn::after {
+    background: rgba(255, 255, 255, 0.3);
+}
+
 #eventos {
-    display: flex;
-    flex-direction: column;
-    gap: calc(var(--spacing-unit) * 1.25);
+    display: grid;
+    gap: calc(var(--spacing-unit) * 1.5);
 }
 
 .evento-card {
     background: linear-gradient(135deg, #4e6e8e, #3f566e);
     border-radius: var(--border-radius);
-    padding: calc(var(--spacing-unit) * 1.5);
+    padding: calc(var(--spacing-unit) * 2);
     box-shadow: var(--shadow-sm);
-    border-left: 4px solid var(--accent-color);
+    border-left: 5px solid var(--accent-color);
     transition: var(--transition);
-    animation: slideUp 0.6s ease-out forwards;
+    animation: slideUp 0.7s ease-out forwards;
     position: relative;
     overflow: hidden;
 }
@@ -176,9 +243,9 @@ button:focus-visible {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.1), transparent 50%);
+    background: radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.15), transparent 60%);
     opacity: 0;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.4s ease;
 }
 
 .evento-card:hover::before {
@@ -186,38 +253,71 @@ button:focus-visible {
 }
 
 .evento-card:hover {
-    transform: translateY(-4px) scale(1.01);
+    transform: translateY(-5px) scale(1.02);
     box-shadow: var(--shadow-md);
 }
 
 .evento-card h2 {
-    margin: 0 0 0.5rem;
-    font-size: clamp(1.2rem, 3vw, 1.4rem);
+    margin: 0 0 calc(var(--spacing-unit) * 0.75);
+    font-size: clamp(1.25rem, 3.5vw, 1.5rem);
     color: var(--text-light);
     font-weight: 600;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .evento-card p {
-    margin: 0.25rem 0;
+    margin: 0.5rem 0;
     color: #e0e6ed;
     font-size: 0.95rem;
-    line-height: 1.4;
+    line-height: 1.5;
+}
+
+.text-center {
+    text-align: center;
+    color: #e0e6ed;
+    font-size: 1rem;
+    margin: calc(var(--spacing-unit) * 1.5) 0;
 }
 
 /* Animações */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(1.5rem); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(2rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes grow {
-    from { width: 0; }
-    to { width: 80px; }
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 100px;
+    }
 }
 
 @keyframes slideUp {
-    from { opacity: 0; transform: translateY(2rem); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(3rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin {
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
 }
 
 /* Responsividade */
@@ -225,45 +325,51 @@ button:focus-visible {
     body {
         font-size: 14px;
     }
+
     main {
-        padding: var(--spacing-unit) calc(var(--spacing-unit) * 0.75);
-        margin: 0.5rem;
+        padding: calc(var(--spacing-unit) * 1.5);
+        margin: calc(var(--spacing-unit) * 0.5);
     }
+
     h1 {
-        font-size: clamp(1.5rem, 4vw, 1.8rem);
+        font-size: clamp(1.75rem, 4.5vw, 2rem);
     }
+
     .evento-card h2 {
-        font-size: clamp(1rem, 2.5vw, 1.2rem);
+        font-size: clamp(1.1rem, 3vw, 1.3rem);
+    }
+
+    button,
+    .delete-btn {
+        padding: calc(var(--spacing-unit) * 0.75);
     }
 }
 
 @media (min-width: 768px) and (max-width: 1024px) {
     #eventos {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: calc(var(--spacing-unit) * 1.5);
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     }
 }
 
 @media (min-width: 1025px) {
     main {
-        width: min(90%, 960px);
-        padding: calc(var(--spacing-unit) * 3);
+        width: min(90%, 1000px);
+        padding: calc(var(--spacing-unit) * 3.5);
     }
+
     h1 {
-        font-size: clamp(2rem, 4vw, 2.5rem);
+        font-size: clamp(2.25rem, 4.5vw, 3rem);
     }
+
     #eventos {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-        gap: calc(var(--spacing-unit) * 1.5);
+        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
     }
 }
 
 /* Acessibilidade */
 :focus-visible {
     outline: 3px solid var(--accent-color);
-    outline-offset: 3px;
+    outline-offset: 4px;
 }
 
 .sr-only {
@@ -279,7 +385,10 @@ button:focus-visible {
 
 /* Performance optimization for reduced motion */
 @media (prefers-reduced-motion: reduce) {
-    *, ::before, ::after {
+
+    *,
+    ::before,
+    ::after {
         animation: none !important;
         transition: none !important;
     }

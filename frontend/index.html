@@ -3,34 +3,55 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Eventos</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/png" href="img/event.png.png">
+    <link rel="icon" type="image/png" href="img/event.png">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <main>
-        <h1>Eventos</h1>
-        <form id="formEvento" autocomplete="off">
-            <label for="titulo">Título</label>
-            <input id="titulo" name="titulo" placeholder="Título" required>
-
-            <label for="descricao">Descrição</label>
-            <input id="descricao" name="descricao" placeholder="Descrição" required>
-
-            <label for="dataHora">Data e Hora</label>
-            <input id="dataHora" name="dataHora" type="datetime-local" required>
-
-            <!--   <label for="palestrante">Palestrante</label>
-            <input id="palestrante" name="palestrante" placeholder="Palestrante" required> -->
-
-            <label for="vagas">Vagas</label>
-            <input id="vagas" name="vagas" type="number" placeholder="Vagas" required min="1">
-
-            <button type="submit">Criar Evento</button>
+        <h1>Gerenciamento de Eventos</h1>
+        <form id="formEvento" autocomplete="off" aria-labelledby="form-title">
+            <fieldset class="space-y-4">
+                <legend class="sr-only">Criar Novo Evento</legend>
+                <div>
+                    <label for="titulo" class="block">Título</label>
+                    <input id="titulo" name="titulo" placeholder="Título do evento" required aria-required="true"
+                        aria-describedby="titulo-error">
+                    <span id="titulo-error" class="sr-only"></span>
+                </div>
+                <div>
+                    <label for="descricao" class="block">Descrição</label>
+                    <textarea id="descricao" name="descricao" placeholder="Descrição do evento" required
+                        aria-required="true" aria-describedby="descricao-error"></textarea>
+                    <span id="descricao-error" class="sr-only"></span>
+                </div>
+                <div>
+                    <label for="dataHora" class="block">Data e Hora</label>
+                    <input id="dataHora" name="dataHora" type="datetime-local" required aria-required="true"
+                        aria-describedby="dataHora-error">
+                    <span id="dataHora-error" class="sr-only"></span>
+                </div>
+                <div>
+                    <label for="palestrante" class="block">Palestrante</label>
+                    <input id="palestrante" name="palestrante" placeholder="Nome do palestrante" required
+                        aria-required="true" aria-describedby="palestrante-error">
+                    <span id="palestrante-error" class="sr-only"></span>
+                </div>
+                <div>
+                    <label for="vagas" class="block">Vagas</label>
+                    <input id="vagas" name="vagas" type="number" placeholder="Número de vagas" required min="1"
+                        aria-required="true" aria-describedby="vagas-error">
+                    <span id="vagas-error" class="sr-only"></span>
+                </div>
+                <button type="submit" id="submitBtn" aria-busy="false">
+                    <span class="button-text">Criar Evento</span>
+                    <span class="loading-spinner sr-only" aria-hidden="true">Carregando...</span>
+                </button>
+            </fieldset>
         </form>
-        <section id="eventos"></section>
+        <section id="eventos" aria-live="polite"></section>
     </main>
     <script src="script.js"></script>
 </body>
