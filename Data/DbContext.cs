@@ -18,11 +18,13 @@ public class SistemaEventosContext : DbContext
         modelBuilder.Entity<Inscricao>()
             .HasOne(i => i.Usuario)
             .WithMany(u => u.Inscricoes)
-            .HasForeignKey(i => i.UsuarioId);
+            .HasForeignKey(i => i.UsuarioId)
+            .OnDelete(DeleteBehavior.Cascade);
 
         modelBuilder.Entity<Inscricao>()
             .HasOne(i => i.Evento)
             .WithMany(e => e.Inscricoes)
-            .HasForeignKey(i => i.EventoId);
+            .HasForeignKey(i => i.EventoId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

@@ -25,7 +25,7 @@ function renderEventos(eventos) {
 // Buscar eventos da API
 async function buscarEventos() {
     try {
-        const resp = await fetch('http://localhost:8099/api/evento');
+        const resp = await fetch('http://localhost:8099/eventos');
         if (!resp.ok) throw new Error('Erro ao buscar eventos');
         const eventos = await resp.json();
         renderEventos(eventos);
@@ -45,7 +45,7 @@ form.addEventListener('submit', async (e) => {
         vagas: Number(form.vagas.value)
     };
     try {
-        const resp = await fetch('http://localhost:8099/api/evento', {
+        const resp = await fetch('http://localhost:8099/eventos', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(evento)

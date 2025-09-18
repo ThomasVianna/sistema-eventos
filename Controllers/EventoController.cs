@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("[controller]s")] // Responde em /eventos
 public class EventoController : ControllerBase
 {
     private readonly MongoService _mongo;
@@ -22,7 +22,7 @@ public class EventoController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Evento>> Create(Evento evento)
+    public async Task<ActionResult<Evento>> Create([FromBody] Evento evento)
     {
         await _mongo.Eventos.InsertOneAsync(evento);
         return Ok(evento);
