@@ -1,6 +1,11 @@
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+
 public class Evento
 {
-    public int Id { get; set; } = 0;
+    [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string? Id { get; set; }
     public string Titulo { get; set; } = null!;
     public string Descricao { get; set; } = null!;
     public DateTime DataHora { get; set; }

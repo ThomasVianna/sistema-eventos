@@ -1,17 +1,18 @@
+/* Reset básico */
 :root {
-    --primary-gradient: linear-gradient(135deg, #6b9ac4, #3b5e83);
-    --card-bg: rgba(60, 40, 100, 0.92);
-    --card-bg-dark: rgba(40, 30, 80, 0.92);
-    --input-bg: #6a7891;
-    --input-bg-dark: #4a5871;
-    --accent-color: #2e86c1;
-    --text-dark: #1a1818;
-    --text-light: #f5f5f5;
-    --error-color: #ff4d4d;
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.25);
-    --transition: all 0.3s ease-out;
-    --border-radius: 12px;
+    --primary-gradient: linear-gradient(135deg, #4a90e2, #9013fe);
+    --card-bg: rgba(35, 35, 60, 0.95);
+    --card-bg-dark: rgba(25, 25, 50, 0.95);
+    --input-bg: #3c3f58;
+    --input-bg-dark: #2c2f48;
+    --accent-color: #50c8ff;
+    --text-dark: #222222;
+    --text-light: #f0f0f5;
+    --error-color: #ff5555;
+    --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.3);
+    --transition: all 0.25s ease-in-out;
+    --border-radius: 10px;
     --spacing-unit: 1rem;
 }
 
@@ -23,60 +24,57 @@
 }
 
 body {
-    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+    font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif;
     background: var(--primary-gradient);
     margin: 0;
-    padding: calc(var(--spacing-unit) * 1);
+    padding: calc(var(--spacing-unit) * 1.5);
     min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
     color: var(--text-dark);
-    font-size: 16px;
-    line-height: 1.6;
+    font-size: 15px;
+    line-height: 1.5;
 }
 
 main {
-    width: min(90%, 800px);
+    width: min(95%, 850px);
     background: var(--card-bg);
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-md);
     padding: calc(var(--spacing-unit) * 3);
     color: var(--text-light);
-    backdrop-filter: blur(12px);
-    animation: fadeIn 0.8s ease-out;
-    transition: background 0.3s ease, transform 0.3s ease;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
 }
 
 main:hover {
-    transform: translateY(-2px);
+    transform: translateY(-3px);
 }
 
 h1 {
     text-align: center;
-    color: #a8c7fa;
-    margin-bottom: calc(var(--spacing-unit) * 2.5);
-    font-size: clamp(2rem, 5vw, 2.75rem);
-    letter-spacing: 0.5px;
+    color: var(--text-light);
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    font-size: clamp(1.8rem, 5vw, 2.6rem);
     font-weight: 700;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.4px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
 h1::after {
     content: "";
-    width: 100px;
-    height: 5px;
+    width: 90px;
+    height: 4px;
     background: var(--accent-color);
     display: block;
-    margin: 0.75rem auto 0;
-    border-radius: 5px;
-    animation: grow 1s ease-out;
+    margin: 0.6rem auto;
+    border-radius: 4px;
+    animation: grow 0.8s ease-out;
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    gap: calc(var(--spacing-unit) * 1.25);
+    display: grid;
+    gap: calc(var(--spacing-unit) * 1.2);
     margin-bottom: calc(var(--spacing-unit) * 2.5);
 }
 
@@ -84,45 +82,49 @@ fieldset {
     border: none;
     padding: 0;
     margin: 0;
+    display: grid;
+    gap: calc(var(--spacing-unit) * 1);
 }
 
 label {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+    font-weight: 500;
+    margin-bottom: 0.4rem;
     color: var(--text-light);
-    font-size: 1rem;
+    font-size: 0.95rem;
     display: block;
 }
 
 input,
 textarea {
-    padding: calc(var(--spacing-unit) * 0.875);
-    border-radius: 10px;
-    font-size: 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: calc(var(--spacing-unit) * 0.8);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
     background: var(--input-bg);
     color: var(--text-dark);
     transition: var(--transition);
     resize: vertical;
-    min-height: 2.5rem;
+    min-height: 2.4rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 textarea {
-    min-height: 100px;
-    max-height: 300px;
+    min-height: 90px;
+    max-height: 280px;
 }
 
 input:focus,
 textarea:focus {
     outline: none;
     border-color: var(--accent-color);
-    box-shadow: 0 0 10px rgba(46, 134, 193, 0.6);
-    background: lighten(var(--input-bg), 5%);
+    box-shadow: 0 0 8px rgba(80, 200, 255, 0.5);
+    background: var(--input-bg);
 }
 
 input::placeholder,
 textarea::placeholder {
-    color: rgba(0, 0, 0, 0.6);
+    color: rgba(0, 0, 0, 0.55);
     opacity: 1;
     font-style: italic;
 }
@@ -130,28 +132,28 @@ textarea::placeholder {
 input[aria-invalid="true"],
 textarea[aria-invalid="true"] {
     border-color: var(--error-color);
-    box-shadow: 0 0 8px rgba(255, 77, 77, 0.5);
+    box-shadow: 0 0 6px rgba(255, 85, 85, 0.4);
 }
 
 .error-message {
     color: var(--error-color);
-    font-size: 0.875rem;
-    margin-top: 0.25rem;
+    font-size: 0.85rem;
+    margin-top: 0.3rem;
     display: block;
 }
 
 button {
-    padding: calc(var(--spacing-unit) * 0.875);
-    border-radius: 10px;
-    font-size: 1rem;
-    background: linear-gradient(135deg, #2e86c1, #1b6399);
+    padding: calc(var(--spacing-unit) * 0.8);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background: linear-gradient(135deg, var(--accent-color), #3a8bc2);
     color: var(--text-light);
     border: none;
     cursor: pointer;
     font-weight: 600;
+    transition: var(--transition);
     position: relative;
     overflow: hidden;
-    transition: var(--transition);
 }
 
 button[aria-busy="true"] .button-text {
@@ -163,129 +165,80 @@ button[aria-busy="true"] .loading-spinner {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 24px;
-    height: 24px;
-    border: 3px solid rgba(255, 255, 255, 0.3);
-    border-top: 3px solid var(--text-light);
+    width: 22px;
+    height: 22px;
+    border: 2.5px solid rgba(255, 255, 255, 0.25);
+    border-top: 2.5px solid var(--text-light);
     border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-button::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: rgba(255, 255, 255, 0.25);
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    transition: width 0.4s ease, height 0.4s ease;
-}
-
-button:hover::after {
-    width: 400px;
-    height: 400px;
+    animation: spin 0.9s linear infinite;
 }
 
 button:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 20px rgba(46, 134, 193, 0.6);
-    background: linear-gradient(135deg, #3498db, #217dbb);
+    background: linear-gradient(135deg, #6cd4ff, #4a9bd2);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(80, 200, 255, 0.5);
 }
 
 button:active {
-    transform: scale(0.97);
+    transform: scale(0.98);
 }
 
 button:focus-visible {
-    outline: 3px solid var(--accent-color);
-    outline-offset: 3px;
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
 }
 
 .delete-btn {
-    background: linear-gradient(135deg, #e53e3e, #c53030);
-    margin-top: calc(var(--spacing-unit) * 0.75);
+    background: linear-gradient(135deg, #ff5555, #cc3333);
+    margin-top: calc(var(--spacing-unit) * 0.6);
     width: 100%;
 }
 
 .delete-btn:hover {
-    background: linear-gradient(135deg, #f56565, #d43d3d);
-    box-shadow: 0 8px 20px rgba(229, 62, 62, 0.6);
-}
-
-.delete-btn::after {
-    background: rgba(255, 255, 255, 0.3);
+    background: linear-gradient(135deg, #ff7777, #e64444);
+    box-shadow: 0 6px 16px rgba(255, 85, 85, 0.5);
 }
 
 #eventos {
     display: grid;
-    gap: calc(var(--spacing-unit) * 1.5);
+    gap: calc(var(--spacing-unit) * 1.3);
 }
 
 .evento-card {
-    background: linear-gradient(135deg, #4e6e8e, #3f566e);
+    background: linear-gradient(135deg, #3a3f58, #2c2f48);
     border-radius: var(--border-radius);
-    padding: calc(var(--spacing-unit) * 2);
+    padding: calc(var(--spacing-unit) * 1.8);
     box-shadow: var(--shadow-sm);
-    border-left: 5px solid var(--accent-color);
+    border-left: 4px solid var(--accent-color);
     transition: var(--transition);
-    animation: slideUp 0.7s ease-out forwards;
-    position: relative;
-    overflow: hidden;
-}
-
-.evento-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 15% 25%, rgba(255, 255, 255, 0.15), transparent 60%);
-    opacity: 0;
-    transition: opacity 0.4s ease;
-}
-
-.evento-card:hover::before {
-    opacity: 1;
+    animation: slideUp 0.6s ease-out forwards;
 }
 
 .evento-card:hover {
-    transform: translateY(-5px) scale(1.02);
+    transform: translateY(-4px);
     box-shadow: var(--shadow-md);
 }
 
 .evento-card h2 {
-    margin: 0 0 calc(var(--spacing-unit) * 0.75);
-    font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+    margin: 0 0 calc(var(--spacing-unit) * 0.6);
+    font-size: clamp(1.15rem, 3.2vw, 1.4rem);
     color: var(--text-light);
     font-weight: 600;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .evento-card p {
     margin: 0.5rem 0;
-    color: #e0e6ed;
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
-
-.text-center {
-    text-align: center;
-    color: #e0e6ed;
-    font-size: 1rem;
-    margin: calc(var(--spacing-unit) * 1.5) 0;
+    color: #d8d8e0;
+    font-size: 0.9rem;
+    line-height: 1.45;
 }
 
 /* Animações */
 @keyframes fadeIn {
     from {
         opacity: 0;
-        transform: translateY(2rem);
+        transform: translateY(1.8rem);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -296,18 +249,16 @@ button:focus-visible {
     from {
         width: 0;
     }
-
     to {
-        width: 100px;
+        width: 90px;
     }
 }
 
 @keyframes slideUp {
     from {
         opacity: 0;
-        transform: translateY(3rem);
+        transform: translateY(2.5rem);
     }
-
     to {
         opacity: 1;
         transform: translateY(0);
@@ -328,20 +279,20 @@ button:focus-visible {
 
     main {
         padding: calc(var(--spacing-unit) * 1.5);
-        margin: calc(var(--spacing-unit) * 0.5);
+        margin: calc(var(--spacing-unit) * 0.4);
     }
 
     h1 {
-        font-size: clamp(1.75rem, 4.5vw, 2rem);
+        font-size: clamp(1.6rem, 4.2vw, 2rem);
     }
 
     .evento-card h2 {
-        font-size: clamp(1.1rem, 3vw, 1.3rem);
+        font-size: clamp(1.05rem, 2.8vw, 1.25rem);
     }
 
     button,
     .delete-btn {
-        padding: calc(var(--spacing-unit) * 0.75);
+        padding: calc(var(--spacing-unit) * 0.7);
     }
 }
 
@@ -353,23 +304,23 @@ button:focus-visible {
 
 @media (min-width: 1025px) {
     main {
-        width: min(90%, 1000px);
-        padding: calc(var(--spacing-unit) * 3.5);
+        width: min(95%, 1000px);
+        padding: calc(var(--spacing-unit) * 3.2);
     }
 
     h1 {
-        font-size: clamp(2.25rem, 4.5vw, 3rem);
+        font-size: clamp(2.1rem, 4.2vw, 2.8rem);
     }
 
     #eventos {
-        grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     }
 }
 
 /* Acessibilidade */
 :focus-visible {
-    outline: 3px solid var(--accent-color);
-    outline-offset: 4px;
+    outline: 2.5px solid var(--accent-color);
+    outline-offset: 3px;
 }
 
 .sr-only {
@@ -385,7 +336,6 @@ button:focus-visible {
 
 /* Performance optimization for reduced motion */
 @media (prefers-reduced-motion: reduce) {
-
     *,
     ::before,
     ::after {
